@@ -34,8 +34,8 @@ client.on('message', message => {
     logger.debug(`Running ${message.author.tag}'s command: ${message.content}`);
     const args = message.content.slice(config.prefix.length).split(/ +/);
     const commandName = args.shift().toLowerCase();
-    if (!client.commands.has(commandName)) return;
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+    if (!command) return;
 
     if (command.cooldown) {
         if (!cooldowns.has(command.name)) {
